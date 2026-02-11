@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surpresa Julia – Galáxia 💙</title>
+<style>
+body {
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    background:#000010;
+    font-family:'Segoe UI', sans-serif;
+    text-align:center;
+    color:white;
+}
+
+/* ===== ESTRELAS ===== */
+.star {
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    animation: blink linear infinite;
+}
+@keyframes blink {
+    0%,100%{opacity:0.2;}
+    50%{opacity:1;}
+}
+
+/* ===== CORAÇÕES ===== */
+.coracao {
+    position:absolute;
+    font-size:80px;
+    color:#00BFFF;
+    cursor:pointer;
+    animation: pulsar 1s infinite alternate;
+    z-index:10;
+}
+@keyframes pulsar {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.3); }
+}
+
+/* ===== PARTICULAS ===== */
+.particle {
+    position:absolute;
+    font-size:25px;
+    animation: particleMove linear forwards;
+}
+@keyframes particleMove {
+    0% { transform: translate(0,0) rotate(0deg); opacity:1; }
+    100% { transform: translate(var(--x), var(--y)) rotate(360deg); opacity:0; }
+}
+
+/* ===== FLORES / PARTICULAS CONTINUAS ===== */
+.float, .bg-heart {
+    position:absolute;
+    font-size:25px;
+    animation: subirCurvo linear forwards;
+}
+@keyframes subirCurvo {
+    0% { transform: translate(0,100vh) rotate(0deg); opacity:1; }
+    100% { transform: translate(50px,-10vh) rotate(360deg); opacity:0; }
+}
+
+/* ===== FRASES INTERATIVAS ===== */
+.frase {
+    position:absolute;
+    font-size:2em;
+    color:#ff69b4;
+    text-shadow: 0 0 5px #ff69b4, 0 0 15px #ff1493, 0 0 25px #ff69b4;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index:20;
+}
+@keyframes shake {
+    0%,100%{transform:translateX(0) translateY(-20px);}
+    25%{transform:translateX(-5px) translateY(-20px);}
+    50%{transform:translateX(5px) translateY(-20px);}
+    75%{transform:translateX(-3px) translateY(-20px);}
+}
+
+/* ===== NOME JULIA ===== */
+#nome {
+    font-size:3em;
+    color:#00BFFF; 
+    text-shadow: 0 0 8px #ff69b4, 0 0 15px #ff1493; 
+    opacity:0;
+    margin-top:50px;
+}
+
+/* ===== MENSAGEM FINAL ===== */
+#mensagem {
+    font-size:1.5em;
+    margin-top:30px;
+    white-space: pre-wrap;
+    opacity:0;
+}
+
+/* ===== BOTÃO SPOTIFY ===== */
+#spotifyBtn {
+    margin-top:20px;
+    padding:10px 20px;
+    font-size:1.2em;
+    background:#1DB954;
+    color:white;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    box-shadow: 0 0 10px #1DB954;
+    opacity:0;
+    transition: opacity 1s, transform 0.3s;
+}
+#spotifyBtn:hover {
+    transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+
+<h1 id="nome">Julia</h1>
+<div id="mensagem"></div>
+<button id="spotifyBtn" onclick="abrirSpotify()">Escute 🎵</button>
+
+<script>
+const frases = [
+    "MEU AMOR",
+    "MINHA GOSTOSA",
+    "MINHA MULHER",
+    "MINHA DELICIA",
+    "Entre todas as estrelas do universo, você é a que faz meu céu brilhar ✨",
+    "TE AMO 💙"
+];
+let index = 0;
+
+const textoMensagem = `Amor, só passando pra dizer que estou com saudades e que te amo demais. 
+Você tá sempre no meu pensamento 💙 Te amo!`;
+
+const body = document.body;
+const nome = document.getElementById("nome");
+const mensagem = document.getElementById("mensagem");
+const spotifyBtn = document.getElementById("spotifyBtn");
+
+/* ===== ESTRELAS ===== */
+for(let i=0;i<200;i++){
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.style.top = Math.random()*100+"vh";
+    star.style.left = Math.random()*100+"vw";
+    star.style.width = (Math.random()*2+1)+"px";
+    star.style.height = (Math.random()*2+1)+"px";
+    star.style.animationDuration = (Math.random()*3+2)+"s";
+    body.appendChild(star);
+}
+
+/* ===== FLORES / PARTICULAS ===== */
+function criarFloresContinuas(){
+    setInterval(()=>{
+        const part = document.createElement("div");
+        part.classList.add("float");
+        part.innerText = Math.random()>0.5?"💙":"🌸";
+        part.style.left = Math.random()*100+"vw";
+        part.style.fontSize = (Math.random()*25+15)+"px";
+        part.style.animationDuration = (Math.random()*3+3)+"s";
+        body.appendChild(part);
+        setTimeout(()=>part.remove(),6000);
+    }, 400);
+}
+criarFloresContinuas();
+
+/* ===== CORAÇÕES FLUTUANTES DE FUNDO ===== */
+function criarCoracoesDeFundo(){
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.classList.add("bg-heart");
+        heart.innerText = "💙";
+        heart.style.left = Math.random()*100+"vw";
+        heart.style.fontSize = (Math.random()*30+20)+"px";
+        heart.style.opacity = 0.5;
+        heart.style.animationDuration = (Math.random()*5+5)+"s";
+        body.appendChild(heart);
+        setTimeout(()=>heart.remove(), 10000);
+    }, 500);
+}
+criarCoracoesDeFundo();
+
+/* ===== PARTICULAS ALEATORIAS ===== */
+function criarFogosAleatorios(){
+    setInterval(()=>{
+        const colors = ["💙","💜","💖","💛","🌸"];
+        const fx = Math.random()*window.innerWidth;
+        const fy = Math.random()*window.innerHeight/2;
+        for(let i=0;i<25;i++){
+            const p = document.createElement("div");
+            p.classList.add("particle");
+            const angle = Math.random()*2*Math.PI;
+            const distance = Math.random()*100+50;
+            p.style.left = fx + "px";
+            p.style.top = fy + "px";
+            p.innerText = colors[Math.floor(Math.random()*colors.length)];
+            p.style.fontSize = (Math.random()*20+10)+"px";
+            p.style.setProperty('--x', distance*Math.cos(angle)+'px');
+            p.style.setProperty('--y', distance*Math.sin(angle)+'px');
+            p.style.animationDuration = (Math.random()*1.5+1.5)+"s";
+            body.appendChild(p);
+            setTimeout(()=>p.remove(),2000);
+        }
+    }, 1500);
+}
+criarFogosAleatorios();
+
+/* ===== CORAÇÃO INTERATIVO ===== */
+function criarCoracao() {
+    if(index >= frases.length) {
+        mostrarMensagemFinal();
+        return;
+    }
+    const c = document.createElement("div");
+    c.classList.add("coracao");
+    c.style.top = "50%";
+    c.style.left = "50%";
+    c.style.transform="translate(-50%,-50%)";
+    c.innerText = "💙";
+    body.appendChild(c);
+
+    c.addEventListener("click", ()=>{
+        mostrarFraseNoCoracao(frases[index], c);
+        index++;
+    });
+}
+
+/* ===== FRASE DENTRO DO CORAÇÃO ===== */
+function mostrarFraseNoCoracao(texto, coracao){
+    const f = document.createElement("div");
+    f.classList.add("frase");
+    f.innerText = texto;
+    f.style.top = coracao.offsetTop - 50 + "px";
+    f.style.left = coracao.offsetLeft + "px";
+    f.style.transform = "translateX(-50%)";
+    body.appendChild(f);
+
+    f.style.opacity = 1;
+    f.style.animation = "shake 0.5s ease-in-out 3";
+
+    setTimeout(()=>{
+        f.style.opacity = 0;
+        setTimeout(()=>{
+            f.remove();
+            explodirCoracao(coracao);
+        }, 300);
+    }, 800);
+}
+
+/* ===== EXPLOSÃO DE CORAÇÕES ===== */
+function explodirCoracao(elem){
+    elem.remove();
+    const colors = ["💙","💜","💖","💛","🌸"];
+    const centerX = window.innerWidth/2;
+    const centerY = window.innerHeight/2;
+    for(let i=0;i<50;i++){
+        const p = document.createElement("div");
+        p.classList.add("particle");
+        const angle = Math.random()*2*Math.PI;
+        const distance = Math.random()*150+50;
+        p.style.left = centerX + "px";
+        p.style.top = centerY + "px";
+        p.innerText = colors[Math.floor(Math.random()*colors.length)];
+        p.style.fontSize = (Math.random()*25+15)+"px";
+        p.style.setProperty('--x', distance*Math.cos(angle)+'px');
+        p.style.setProperty('--y', distance*Math.sin(angle)+'px');
+        p.style.animationDuration = (Math.random()*1.5+1.5)+"s";
+        body.appendChild(p);
+        setTimeout(()=>p.remove(),2000);
+    }
+
+    setTimeout(criarCoracao,1200);
+}
+
+/* ===== MENSAGEM FINAL ===== */
+function mostrarMensagemFinal(){
+    nome.style.opacity=1;
+    mensagem.style.opacity=1;
+    spotifyBtn.style.opacity=1; 
+    let i=0;
+    const interval = setInterval(()=>{
+        mensagem.innerText += textoMensagem[i];
+        i++;
+        if(i>=textoMensagem.length) clearInterval(interval);
+    },50);
+}
+
+/* ===== SPOTIFY ===== */
+function abrirSpotify(){
+    window.open("https://open.spotify.com/intl-pt/track/0cP8fL9xvi8OYisR8OJuzN", "_blank");
+}
+
+/* ===== INICIA ===== */
+criarCoracao();
+</script>
+</body>
+</html>
