@@ -115,6 +115,43 @@ body {
 #spotifyBtn:hover {
     transform: scale(1.1);
 }
+
+/* ===== CARTA INTERATIVA ===== */
+#cartaContainer {
+    margin-top: 20px;
+    text-align: center;
+    z-index: 20;
+    position: relative;
+    display: none; /* começa escondida */
+}
+
+#carta {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 1.2em;
+    background: #ff69b4;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff69b4;
+    transition: transform 0.3s, background 0.3s;
+}
+#carta:hover {
+    transform: scale(1.05);
+    background: #ff1493;
+}
+
+#mensagemCarta {
+    margin-top: 15px;
+    font-size: 1.1em;
+    color: #ffb6c1;
+    text-shadow: 0 0 5px #ff69b4;
+    opacity: 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: opacity 1s;
+}
 </style>
 </head>
 <body>
@@ -122,6 +159,18 @@ body {
 <h1 id="nome">Julia</h1>
 <div id="mensagem"></div>
 <button id="spotifyBtn" onclick="abrirSpotify()">Escute 🎵</button>
+
+<!-- ===== CARTA INTERATIVA NO FINAL ===== -->
+<div id="cartaContainer">
+    <div id="carta" onclick="abrirCarta()">
+        💌 Clique aqui para abrir sua carta 💌
+    </div>
+    <div id="mensagemCarta">
+        Meu amor, só queria te dizer o quanto gosto de você e que você é o meu amor. 💙
+        <br><br>
+        Assinado: Mônica ❤️
+    </div>
+</div>
 
 <script>
 const frases = [
@@ -141,6 +190,7 @@ const body = document.body;
 const nome = document.getElementById("nome");
 const mensagem = document.getElementById("mensagem");
 const spotifyBtn = document.getElementById("spotifyBtn");
+const cartaContainer = document.getElementById("cartaContainer");
 
 /* ===== ESTRELAS ===== */
 for(let i=0;i<200;i++){
@@ -286,7 +336,11 @@ function mostrarMensagemFinal(){
     const interval = setInterval(()=>{
         mensagem.innerText += textoMensagem[i];
         i++;
-        if(i>=textoMensagem.length) clearInterval(interval);
+        if(i>=textoMensagem.length){
+            clearInterval(interval);
+            // Mostra a carta somente depois que a mensagem final acabou
+            cartaContainer.style.display = "block";
+        }
     },50);
 }
 
@@ -295,9 +349,18 @@ function abrirSpotify(){
     window.open("https://open.spotify.com/intl-pt/track/0cP8fL9xvi8OYisR8OJuzN", "_blank");
 }
 
+/* ===== CARTA INTERATIVA ===== */
+function abrirCarta(){
+    const msg = document.getElementById("mensagemCarta");
+    if(msg.style.opacity == 1){
+        msg.style.opacity = 0;
+    } else {
+        msg.style.opacity = 1;
+    }
+}
+
 /* ===== INICIA ===== */
 criarCoracao();
 </script>
 </body>
 </html>
- 
