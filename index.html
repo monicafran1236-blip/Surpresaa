@@ -13,7 +13,7 @@ body{
 }
 .card{
   width:350px;padding:30px;text-align:center;
-  background:rgba(255,255,255,.92);
+  background:rgba(255,255,255,.95);
   border-radius:26px;
   box-shadow:0 20px 40px rgba(0,0,0,.15);
   z-index:2;
@@ -32,41 +32,35 @@ button:hover{opacity:.95}
   background:linear-gradient(135deg,#1DB954,#1ed760);
 }
 
-/* corações azuis */
+/* corações */
 .heart{
   position:absolute;top:-20px;
   color:rgba(59,130,246,.6);
   font-size:18px;animation:cair linear infinite;
 }
-@keyframes cair{to{transform:translateY(110vh);opacity:0}}
+@keyframes cair{
+  to{transform:translateY(110vh);opacity:0}
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h1 id="titulo">Tenho algo pra você…</h1>
-  <p id="pergunta">Vamos começar 💙</p>
+  <h1>Tenho algo pra você… 💙</h1>
+  <p id="pergunta"></p>
 
-  <button id="a" onclick="responder(0)">Vamos</button>
-  <button id="b" onclick="responder(1)">Quero ver</button>
+  <button id="btn1" onclick="responder()"></button>
+  <button id="btn2" onclick="responder()"></button>
 
   <div id="final" class="hidden">
-    <p>
-      Eu sinto muita <strong>saudade</strong> de você.<br><br>
-      Eu <strong>te amo</strong> de verdade.<br><br>
-      Sinto falta do seu <strong>cheiro</strong>, do seu <strong>abraço</strong>,
-      do seu <strong>carinho</strong> perto de mim.
-    </p>
-
-    <p>
-      Já estou <strong>contando os dias</strong> pra te ver,<br>
-      pra te abraçar de novo<br>
-      e sentir tudo isso outra vez.
-    </p>
-
-    <p style="font-size:18px;color:#1e40af">
-      Você é muito importante pra mim 💙
+    <p style="font-size:17px; color:#1e40af;">
+      <strong>
+      Te amo meu amor e estou contando os dias para sentir seus carinhos.
+      Amo ter você perto de mim.
+      Você é muito especial.
+      Lhe dedico essa música porque você merece tudo 💙
+      </strong>
     </p>
 
     <button class="spotify" onclick="abrirSpotify()">
@@ -76,48 +70,49 @@ button:hover{opacity:.95}
 </div>
 
 <script>
-let i = 0;
+let indice = 0;
 
-/* perguntas e respostas DIFERENTES */
-const quiz = [
+const perguntas = [
   {
-    q: "O que mais faz falta quando penso em você?",
-    a: ["Seu cheiro", "O silêncio"],
-    c: 0
+    texto: "O que mais faz falta quando penso em você?",
+    opcoes: ["Seu cheiro 💙", "O silêncio"]
   },
   {
-    q: "O que eu mais quero agora?",
-    a: ["Te ver logo", "Dormir"],
-    c: 0
+    texto: "O que eu mais quero agora?",
+    opcoes: ["Te ver logo 😍", "Dormir"]
   },
   {
-    q: "O que sempre ficou no meu coração?",
-    a: ["Você", "O tempo"],
-    c: 0
+    texto: "O que mais me deixa feliz quando lembro de você?",
+    opcoes: ["Seu abraço 🤍", "O tempo passando"]
   }
 ];
 
-function responder(escolha){
-  if(i < quiz.length){
-    document.getElementById("pergunta").innerText = quiz[i].q;
-    document.getElementById("a").innerText = quiz[i].a[0];
-    document.getElementById("b").innerText = quiz[i].a[1];
-    i++;
+function mostrarPergunta(){
+  if(indice < perguntas.length){
+    document.getElementById("pergunta").innerText = perguntas[indice].texto;
+    document.getElementById("btn1").innerText = perguntas[indice].opcoes[0];
+    document.getElementById("btn2").innerText = perguntas[indice].opcoes[1];
   }else{
-    document.getElementById("a").style.display="none";
-    document.getElementById("b").style.display="none";
+    document.getElementById("btn1").style.display="none";
+    document.getElementById("btn2").style.display="none";
     document.getElementById("pergunta").style.display="none";
     document.getElementById("final").classList.remove("hidden");
   }
 }
 
-/* Spotify – Te Vivo */
+function responder(){
+  indice++;
+  mostrarPergunta();
+}
+
 function abrirSpotify(){
   window.open(
     "https://open.spotify.com/track/5QJ5mJ8z6QxJ2lQ0bQKJbR",
     "_blank"
   );
 }
+
+mostrarPergunta();
 
 /* corações */
 setInterval(()=>{
