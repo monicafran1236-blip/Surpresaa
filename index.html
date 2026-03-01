@@ -2,365 +2,134 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surpresa Julia – Galáxia 💙</title>
+<title>Quiz do Amor 💖</title>
+
 <style>
 body {
-    margin:0;
-    padding:0;
-    overflow:hidden;
-    background:#000010;
-    font-family:'Segoe UI', sans-serif;
-    text-align:center;
-    color:white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333;
 }
 
-/* ===== ESTRELAS ===== */
-.star {
-    position:absolute;
-    width:2px;
-    height:2px;
-    background:white;
-    border-radius:50%;
-    animation: blink linear infinite;
-}
-@keyframes blink {
-    0%,100%{opacity:0.2;}
-    50%{opacity:1;}
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* ===== CORAÇÕES ===== */
-.coracao {
-    position:absolute;
-    font-size:80px;
-    color:#00BFFF;
-    cursor:pointer;
-    animation: pulsar 1s infinite alternate;
-    z-index:10;
-}
-@keyframes pulsar {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.3); }
+h1 {
+  color: #ff3366;
 }
 
-/* ===== PARTICULAS ===== */
-.particle {
-    position:absolute;
-    font-size:25px;
-    animation: particleMove linear forwards;
-}
-@keyframes particleMove {
-    0% { transform: translate(0,0) rotate(0deg); opacity:1; }
-    100% { transform: translate(var(--x), var(--y)) rotate(360deg); opacity:0; }
-}
-
-/* ===== FLORES / PARTICULAS CONTINUAS ===== */
-.float, .bg-heart {
-    position:absolute;
-    font-size:25px;
-    animation: subirCurvo linear forwards;
-}
-@keyframes subirCurvo {
-    0% { transform: translate(0,100vh) rotate(0deg); opacity:1; }
-    100% { transform: translate(50px,-10vh) rotate(360deg); opacity:0; }
+button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: #ff3366;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* ===== FRASES INTERATIVAS ===== */
-.frase {
-    position:absolute;
-    font-size:2em;
-    color:#ff69b4;
-    text-shadow: 0 0 5px #ff69b4, 0 0 15px #ff1493, 0 0 25px #ff69b4;
-    transition: opacity 0.3s, transform 0.3s;
-    z-index:20;
-}
-@keyframes shake {
-    0%,100%{transform:translateX(0) translateY(-20px);}
-    25%{transform:translateX(-5px) translateY(-20px);}
-    50%{transform:translateX(5px) translateY(-20px);}
-    75%{transform:translateX(-3px) translateY(-20px);}
+button:hover {
+  background: #e6005c;
 }
 
-/* ===== NOME JULIA ===== */
-#nome {
-    font-size:3em;
-    color:#00BFFF; 
-    text-shadow: 0 0 8px #ff69b4, 0 0 15px #ff1493; 
-    opacity:0;
-    margin-top:50px;
-}
-
-/* ===== MENSAGEM FINAL ===== */
-#mensagem {
-    font-size:1.5em;
-    margin-top:30px;
-    white-space: pre-wrap;
-    opacity:0;
-}
-
-/* ===== BOTÃO SPOTIFY ===== */
-#spotifyBtn {
-    margin-top:20px;
-    padding:10px 20px;
-    font-size:1.2em;
-    background:#1DB954;
-    color:white;
-    border:none;
-    border-radius:25px;
-    cursor:pointer;
-    box-shadow: 0 0 10px #1DB954;
-    opacity:0;
-    transition: opacity 1s, transform 0.3s;
-}
-#spotifyBtn:hover {
-    transform: scale(1.1);
-}
-
-/* ===== CARTA INTERATIVA ===== */
-#cartaContainer {
-    margin-top: 20px;
-    text-align: center;
-    z-index: 20;
-    position: relative;
-    display: none; /* começa escondida */
-}
-
-#carta {
-    display: inline-block;
-    padding: 15px 25px;
-    font-size: 1.2em;
-    background: #ff69b4;
-    color: white;
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 0 15px #ff69b4;
-    transition: transform 0.3s, background 0.3s;
-}
-#carta:hover {
-    transform: scale(1.05);
-    background: #ff1493;
-}
-
-#mensagemCarta {
-    margin-top: 15px;
-    font-size: 1.1em;
-    color: #ffb6c1;
-    text-shadow: 0 0 5px #ff69b4;
-    opacity: 0;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    transition: opacity 1s;
+#resultado {
+  display: none;
+  font-size: 18px;
+  margin-top: 15px;
 }
 </style>
 </head>
+
 <body>
 
-<h1 id="nome">Julia</h1>
-<div id="mensagem"></div>
-<button id="spotifyBtn" onclick="abrirSpotify()">Escute 🎵</button>
+<div class="card">
+  <h1 id="titulo">Quiz do Amor 💘</h1>
+  <p id="pergunta">Pronta pra começar?</p>
 
-<!-- ===== CARTA INTERATIVA NO FINAL ===== -->
-<div id="cartaContainer">
-    <div id="carta" onclick="abrirCarta()">
-        💌 Clique aqui para abrir sua carta 💌
-    </div>
-    <div id="mensagemCarta">
-        Meu amor, só queria te dizer o quanto gosto de você e que você é o meu amor. 💙
-        <br><br>
-        Assinado: Mônica ❤️
-    </div>
+  <button onclick="responder(1)">Sim 😍</button>
+  <button onclick="responder(0)">Claro 💖</button>
+
+  <div id="resultado"></div>
 </div>
 
 <script>
-const frases = [
-    "MEU AMOR",
-    "MINHA GOSTOSA",
-    "MINHA MULHER",
-    "MINHA DELICIA",
-    "Entre todas as estrelas do universo, você é a que faz meu céu brilhar ✨",
-    "TE AMO 💙"
+let etapa = 0;
+let pontos = 0;
+
+const perguntas = [
+  {
+    texto: "O que mais importa pra mim?",
+    respostas: ["Você 💕", "Dinheiro 💸"],
+    certa: 0
+  },
+  {
+    texto: "O que eu mais gosto quando penso em você?",
+    respostas: ["Seu sorriso 😍", "Dormir 😂"],
+    certa: 0
+  },
+  {
+    texto: "Vale a pena tentar algo sério comigo?",
+    respostas: ["Sim ❤️", "Óbvio 😘"],
+    certa: 1
+  }
 ];
-let index = 0;
 
-const textoMensagem = `Amor, só passando pra dizer que estou com saudades e que te amo demais. 
-Você tá sempre no meu pensamento 💙 Te amo!`;
+function responder(escolha) {
+  if (etapa === 0) {
+    etapa++;
+    carregarPergunta();
+    return;
+  }
 
-const body = document.body;
-const nome = document.getElementById("nome");
-const mensagem = document.getElementById("mensagem");
-const spotifyBtn = document.getElementById("spotifyBtn");
-const cartaContainer = document.getElementById("cartaContainer");
+  if (escolha === perguntas[etapa - 1].certa) {
+    pontos++;
+  }
 
-/* ===== ESTRELAS ===== */
-for(let i=0;i<200;i++){
-    const star = document.createElement("div");
-    star.classList.add("star");
-    star.style.top = Math.random()*100+"vh";
-    star.style.left = Math.random()*100+"vw";
-    star.style.width = (Math.random()*2+1)+"px";
-    star.style.height = (Math.random()*2+1)+"px";
-    star.style.animationDuration = (Math.random()*3+2)+"s";
-    body.appendChild(star);
+  etapa++;
+  if (etapa <= perguntas.length) {
+    carregarPergunta();
+  } else {
+    mostrarFinal();
+  }
 }
 
-/* ===== FLORES / PARTICULAS ===== */
-function criarFloresContinuas(){
-    setInterval(()=>{
-        const part = document.createElement("div");
-        part.classList.add("float");
-        part.innerText = Math.random()>0.5?"💙":"🌸";
-        part.style.left = Math.random()*100+"vw";
-        part.style.fontSize = (Math.random()*25+15)+"px";
-        part.style.animationDuration = (Math.random()*3+3)+"s";
-        body.appendChild(part);
-        setTimeout(()=>part.remove(),6000);
-    }, 400);
-}
-criarFloresContinuas();
-
-/* ===== CORAÇÕES FLUTUANTES DE FUNDO ===== */
-function criarCoracoesDeFundo(){
-    setInterval(()=>{
-        const heart = document.createElement("div");
-        heart.classList.add("bg-heart");
-        heart.innerText = "💙";
-        heart.style.left = Math.random()*100+"vw";
-        heart.style.fontSize = (Math.random()*30+20)+"px";
-        heart.style.opacity = 0.5;
-        heart.style.animationDuration = (Math.random()*5+5)+"s";
-        body.appendChild(heart);
-        setTimeout(()=>heart.remove(), 10000);
-    }, 500);
-}
-criarCoracoesDeFundo();
-
-/* ===== PARTICULAS ALEATORIAS ===== */
-function criarFogosAleatorios(){
-    setInterval(()=>{
-        const colors = ["💙","💜","💖","💛","🌸"];
-        const fx = Math.random()*window.innerWidth;
-        const fy = Math.random()*window.innerHeight/2;
-        for(let i=0;i<25;i++){
-            const p = document.createElement("div");
-            p.classList.add("particle");
-            const angle = Math.random()*2*Math.PI;
-            const distance = Math.random()*100+50;
-            p.style.left = fx + "px";
-            p.style.top = fy + "px";
-            p.innerText = colors[Math.floor(Math.random()*colors.length)];
-            p.style.fontSize = (Math.random()*20+10)+"px";
-            p.style.setProperty('--x', distance*Math.cos(angle)+'px');
-            p.style.setProperty('--y', distance*Math.sin(angle)+'px');
-            p.style.animationDuration = (Math.random()*1.5+1.5)+"s";
-            body.appendChild(p);
-            setTimeout(()=>p.remove(),2000);
-        }
-    }, 1500);
-}
-criarFogosAleatorios();
-
-/* ===== CORAÇÃO INTERATIVO ===== */
-function criarCoracao() {
-    if(index >= frases.length) {
-        mostrarMensagemFinal();
-        return;
-    }
-    const c = document.createElement("div");
-    c.classList.add("coracao");
-    c.style.top = "50%";
-    c.style.left = "50%";
-    c.style.transform="translate(-50%,-50%)";
-    c.innerText = "💙";
-    body.appendChild(c);
-
-    c.addEventListener("click", ()=>{
-        mostrarFraseNoCoracao(frases[index], c);
-        index++;
-    });
+function carregarPergunta() {
+  document.getElementById("pergunta").innerText = perguntas[etapa - 1].texto;
+  const botoes = document.querySelectorAll("button");
+  botoes[0].innerText = perguntas[etapa - 1].respostas[0];
+  botoes[1].innerText = perguntas[etapa - 1].respostas[1];
 }
 
-/* ===== FRASE DENTRO DO CORAÇÃO ===== */
-function mostrarFraseNoCoracao(texto, coracao){
-    const f = document.createElement("div");
-    f.classList.add("frase");
-    f.innerText = texto;
-    f.style.top = coracao.offsetTop - 50 + "px";
-    f.style.left = coracao.offsetLeft + "px";
-    f.style.transform = "translateX(-50%)";
-    body.appendChild(f);
+function mostrarFinal() {
+  document.getElementById("pergunta").style.display = "none";
+  document.querySelectorAll("button").forEach(b => b.style.display = "none");
 
-    f.style.opacity = 1;
-    f.style.animation = "shake 0.5s ease-in-out 3";
+  let msg = "";
+  if (pontos >= 2) {
+    msg = "Resultado: 💖💖💖<br>Você é muito especial pra mim.<br>Quero tentar algo com você 😍";
+  } else {
+    msg = "Resultado: 💕<br>Mesmo assim… gosto muito de você 💌";
+  }
 
-    setTimeout(()=>{
-        f.style.opacity = 0;
-        setTimeout(()=>{
-            f.remove();
-            explodirCoracao(coracao);
-        }, 300);
-    }, 800);
+  const res = document.getElementById("resultado");
+  res.innerHTML = msg;
+  res.style.display = "block";
 }
-
-/* ===== EXPLOSÃO DE CORAÇÕES ===== */
-function explodirCoracao(elem){
-    elem.remove();
-    const colors = ["💙","💜","💖","💛","🌸"];
-    const centerX = window.innerWidth/2;
-    const centerY = window.innerHeight/2;
-    for(let i=0;i<50;i++){
-        const p = document.createElement("div");
-        p.classList.add("particle");
-        const angle = Math.random()*2*Math.PI;
-        const distance = Math.random()*150+50;
-        p.style.left = centerX + "px";
-        p.style.top = centerY + "px";
-        p.innerText = colors[Math.floor(Math.random()*colors.length)];
-        p.style.fontSize = (Math.random()*25+15)+"px";
-        p.style.setProperty('--x', distance*Math.cos(angle)+'px');
-        p.style.setProperty('--y', distance*Math.sin(angle)+'px');
-        p.style.animationDuration = (Math.random()*1.5+1.5)+"s";
-        body.appendChild(p);
-        setTimeout(()=>p.remove(),2000);
-    }
-
-    setTimeout(criarCoracao,1200);
-}
-
-/* ===== MENSAGEM FINAL ===== */
-function mostrarMensagemFinal(){
-    nome.style.opacity=1;
-    mensagem.style.opacity=1;
-    spotifyBtn.style.opacity=1; 
-    let i=0;
-    const interval = setInterval(()=>{
-        mensagem.innerText += textoMensagem[i];
-        i++;
-        if(i>=textoMensagem.length){
-            clearInterval(interval);
-            // Mostra a carta somente depois que a mensagem final acabou
-            cartaContainer.style.display = "block";
-        }
-    },50);
-}
-
-/* ===== SPOTIFY ===== */
-function abrirSpotify(){
-    window.open("https://open.spotify.com/intl-pt/track/0cP8fL9xvi8OYisR8OJuzN", "_blank");
-}
-
-/* ===== CARTA INTERATIVA ===== */
-function abrirCarta(){
-    const msg = document.getElementById("mensagemCarta");
-    if(msg.style.opacity == 1){
-        msg.style.opacity = 0;
-    } else {
-        msg.style.opacity = 1;
-    }
-}
-
-/* ===== INICIA ===== */
-criarCoracao();
 </script>
+
 </body>
 </html>
