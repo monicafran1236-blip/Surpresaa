@@ -17,6 +17,7 @@ body{
   border-radius:26px;
   box-shadow:0 20px 40px rgba(0,0,0,.15);
   z-index:2;
+  position:relative;
 }
 h1{color:#2563eb;font-size:22px;margin-bottom:10px}
 p{color:#334155;font-size:16px;line-height:1.6}
@@ -25,6 +26,7 @@ button{
   border:none;border-radius:30px;
   background:linear-gradient(135deg,#3b82f6,#60a5fa);
   color:#fff;font-size:16px;cursor:pointer;
+  transition:.3s;
 }
 button:hover{opacity:.95}
 .hidden{display:none}
@@ -50,8 +52,8 @@ button:hover{opacity:.95}
   <h1>Tenho algo pra você… 💙</h1>
   <p id="pergunta"></p>
 
-  <button id="btn1" onclick="responder()"></button>
-  <button id="btn2" onclick="responder()"></button>
+  <button id="btn1" onclick="responder(0)"></button>
+  <button id="btn2" onclick="responder(1)"></button>
 
   <div id="final" class="hidden">
     <p style="font-size:17px; color:#1e40af;">
@@ -75,34 +77,70 @@ let indice = 0;
 const perguntas = [
   {
     texto: "O que mais faz falta quando penso em você?",
-    opcoes: ["Seu cheiro 💙", "O silêncio"]
+    opcoes: ["Seu cheiro 💙", "O silêncio"],
+    correta: 0
   },
   {
     texto: "O que eu mais quero agora?",
-    opcoes: ["Te ver logo 😍", "Dormir"]
+    opcoes: ["Te ver logo 😍", "Dormir"],
+    correta: 0
   },
   {
-    texto: "O que mais me deixa feliz quando lembro de você?",
-    opcoes: ["Seu abraço 🤍", "O tempo passando"]
+    texto: "Qual é meu lugar favorito?",
+    opcoes: ["Ao seu lado 🤍", "Fila de banco"],
+    correta: 0
+  },
+  {
+    texto: "O que meu coração faz quando você manda mensagem?",
+    opcoes: ["Dispara 💓", "Ignora"],
+    correta: 0
+  },
+  {
+    texto: "Se eu pudesse escolher agora, eu escolheria:",
+    opcoes: ["Ficar juntinhas 💞", "Lavar roupa 😂"],
+    correta: 0
+  },
+  {
+    texto: "Qual é meu maior plano?",
+    opcoes: ["Construir algo com você 💙", "Virar astronauta amanhã 🚀"],
+    correta: 0
   }
 ];
 
 function mostrarPergunta(){
+  const btn1 = document.getElementById("btn1");
+  const btn2 = document.getElementById("btn2");
+
+  btn2.style.position = "static";
+
   if(indice < perguntas.length){
     document.getElementById("pergunta").innerText = perguntas[indice].texto;
-    document.getElementById("btn1").innerText = perguntas[indice].opcoes[0];
-    document.getElementById("btn2").innerText = perguntas[indice].opcoes[1];
+    btn1.innerText = perguntas[indice].opcoes[0];
+    btn2.innerText = perguntas[indice].opcoes[1];
   }else{
-    document.getElementById("btn1").style.display="none";
-    document.getElementById("btn2").style.display="none";
+    btn1.style.display="none";
+    btn2.style.display="none";
     document.getElementById("pergunta").style.display="none";
     document.getElementById("final").classList.remove("hidden");
   }
 }
 
-function responder(){
-  indice++;
-  mostrarPergunta();
+function responder(opcao){
+  if(opcao === perguntas[indice].correta){
+    indice++;
+    mostrarPergunta();
+  }else{
+    respostaErrada();
+  }
+}
+
+function respostaErrada(){
+  alert("Eiiiii 😠💙 essa não é a resposta certa! Tenta de novo 😌");
+
+  const btnErrado = document.getElementById("btn2");
+  btnErrado.style.position = "absolute";
+  btnErrado.style.left = Math.random() * 70 + "%";
+  btnErrado.style.top = Math.random() * 70 + "%";
 }
 
 function abrirSpotify(){
@@ -114,7 +152,7 @@ function abrirSpotify(){
 
 mostrarPergunta();
 
-/* corações */
+/* corações caindo */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -124,8 +162,8 @@ setInterval(()=>{
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
 },450);
+
 </script>
 
 </body>
 </html>
-
