@@ -5,10 +5,6 @@
 <title>Pra Você 💙</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   height: 100vh;
@@ -21,42 +17,28 @@ body {
 }
 
 .card {
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.9);
   border-radius: 26px;
   padding: 30px;
   width: 350px;
   text-align: center;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-  animation: surgir 1s ease;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   z-index: 2;
 }
 
-@keyframes surgir {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 h1 {
-  font-size: 22px;
-  margin-bottom: 15px;
   color: #2563eb;
+  font-size: 22px;
 }
 
 p {
+  color: #334155;
   font-size: 16px;
   line-height: 1.6;
-  color: #334155;
 }
 
 button {
-  margin-top: 18px;
+  margin-top: 15px;
   padding: 14px;
   width: 100%;
   border: none;
@@ -65,12 +47,10 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(59,130,246,0.4);
+  opacity: 0.9;
 }
 
 .hidden {
@@ -81,21 +61,17 @@ button:hover {
   background: linear-gradient(135deg, #1DB954, #1ed760);
 }
 
-/* 💙 CORAÇÕES CAINDO */
+/* CORAÇÕES */
 .heart {
   position: absolute;
   top: -20px;
   color: rgba(59,130,246,0.6);
-  font-size: 20px;
+  font-size: 18px;
   animation: cair linear infinite;
 }
 
 @keyframes cair {
-  0% {
-    transform: translateY(-10px);
-    opacity: 1;
-  }
-  100% {
+  to {
     transform: translateY(110vh);
     opacity: 0;
   }
@@ -107,21 +83,21 @@ button:hover {
 
 <div class="card">
   <h1 id="titulo">Tenho algo pra você…</h1>
-  <p id="texto">Vamos ver se você descobre 💭</p>
+  <p id="texto">Clica com calma 💙</p>
 
-  <button onclick="responder()">Vamos 💙</button>
-  <button onclick="responder()">Quero ver 💫</button>
+  <button id="btn1" onclick="responder()">Continuar</button>
+  <button id="btn2" onclick="responder()">Continuar</button>
 
   <div id="final" class="hidden">
     <p>
-      Não é sobre acertar perguntas…<br><br>
+      Não é um jogo.<br><br>
       É sobre o que eu sinto por você.
     </p>
 
     <p>
       Eu sinto muita saudade do seu cheiro,<br>
       do seu carinho,<br>
-      da sua presença comigo.
+      da sua presença.
     </p>
 
     <p>
@@ -142,21 +118,22 @@ button:hover {
 
 <script>
 let etapa = 0;
-const frases = [
+
+const etapas = [
   "O que mais faz falta quando penso em você?",
   "O que eu mais quero agora?",
-  "O que nunca saiu do meu coração?"
+  "O que nunca saiu do meu coração?",
+  "Agora é de coração…"
 ];
 
 function responder() {
-  if (etapa < frases.length) {
-    document.getElementById("texto").innerText = frases[etapa];
+  if (etapa < etapas.length) {
+    document.getElementById("texto").innerText = etapas[etapa];
     etapa++;
   } else {
-    document.getElementById("titulo").innerText = "Agora é de coração…";
+    document.getElementById("btn1").style.display = "none";
+    document.getElementById("btn2").style.display = "none";
     document.getElementById("texto").style.display = "none";
-    document.querySelectorAll("button")[0].style.display = "none";
-    document.querySelectorAll("button")[1].style.display = "none";
     document.getElementById("final").classList.remove("hidden");
   }
 }
@@ -168,7 +145,7 @@ function abrirSpotify() {
   );
 }
 
-/* CRIAR CORAÇÕES */
+/* CORAÇÕES */
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -177,10 +154,8 @@ setInterval(() => {
   heart.style.animationDuration = (4 + Math.random() * 4) + "s";
   document.body.appendChild(heart);
 
-  setTimeout(() => {
-    heart.remove();
-  }, 8000);
-}, 400);
+  setTimeout(() => heart.remove(), 8000);
+}, 450);
 </script>
 
 </body>
