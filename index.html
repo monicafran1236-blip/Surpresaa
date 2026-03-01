@@ -5,77 +5,40 @@
 <title>Pra Você 💙</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #dbeafe, #e0f2fe, #f0f9ff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  overflow: hidden;
+body{
+  margin:0;height:100vh;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:linear-gradient(135deg,#dbeafe,#e0f2fe,#f0f9ff);
+}
+.card{
+  width:350px;padding:30px;text-align:center;
+  background:rgba(255,255,255,.92);
+  border-radius:26px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  z-index:2;
+}
+h1{color:#2563eb;font-size:22px;margin-bottom:10px}
+p{color:#334155;font-size:16px;line-height:1.6}
+button{
+  width:100%;padding:14px;margin-top:12px;
+  border:none;border-radius:30px;
+  background:linear-gradient(135deg,#3b82f6,#60a5fa);
+  color:#fff;font-size:16px;cursor:pointer;
+}
+button:hover{opacity:.95}
+.hidden{display:none}
+.spotify{
+  background:linear-gradient(135deg,#1DB954,#1ed760);
 }
 
-.card {
-  background: rgba(255,255,255,0.9);
-  border-radius: 26px;
-  padding: 30px;
-  width: 350px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  z-index: 2;
+/* corações azuis */
+.heart{
+  position:absolute;top:-20px;
+  color:rgba(59,130,246,.6);
+  font-size:18px;animation:cair linear infinite;
 }
-
-h1 {
-  color: #2563eb;
-  font-size: 22px;
-}
-
-p {
-  color: #334155;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-button {
-  margin-top: 15px;
-  padding: 14px;
-  width: 100%;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-.hidden {
-  display: none;
-}
-
-.spotify {
-  background: linear-gradient(135deg, #1DB954, #1ed760);
-}
-
-/* CORAÇÕES */
-.heart {
-  position: absolute;
-  top: -20px;
-  color: rgba(59,130,246,0.6);
-  font-size: 18px;
-  animation: cair linear infinite;
-}
-
-@keyframes cair {
-  to {
-    transform: translateY(110vh);
-    opacity: 0;
-  }
-}
+@keyframes cair{to{transform:translateY(110vh);opacity:0}}
 </style>
 </head>
 
@@ -83,31 +46,27 @@ button:hover {
 
 <div class="card">
   <h1 id="titulo">Tenho algo pra você…</h1>
-  <p id="texto">Clica com calma 💙</p>
+  <p id="pergunta">Vamos começar 💙</p>
 
-  <button id="btn1" onclick="responder()">Continuar</button>
-  <button id="btn2" onclick="responder()">Continuar</button>
+  <button id="a" onclick="responder(0)">Vamos</button>
+  <button id="b" onclick="responder(1)">Quero ver</button>
 
   <div id="final" class="hidden">
     <p>
-      Não é um jogo.<br><br>
-      É sobre o que eu sinto por você.
+      Eu sinto muita <strong>saudade</strong> de você.<br><br>
+      Eu <strong>te amo</strong> de verdade.<br><br>
+      Sinto falta do seu <strong>cheiro</strong>, do seu <strong>abraço</strong>,
+      do seu <strong>carinho</strong> perto de mim.
     </p>
 
     <p>
-      Eu sinto muita saudade do seu cheiro,<br>
-      do seu carinho,<br>
-      da sua presença.
+      Já estou <strong>contando os dias</strong> pra te ver,<br>
+      pra te abraçar de novo<br>
+      e sentir tudo isso outra vez.
     </p>
 
-    <p>
-      Já conto os dias pra te ver,<br>
-      te abraçar,<br>
-      e sentir tudo isso de novo.
-    </p>
-
-    <p style="font-size:18px; color:#1e40af;">
-      Eu te amo 💙
+    <p style="font-size:18px;color:#1e40af">
+      Você é muito importante pra mim 💙
     </p>
 
     <button class="spotify" onclick="abrirSpotify()">
@@ -117,45 +76,59 @@ button:hover {
 </div>
 
 <script>
-let etapa = 0;
+let i = 0;
 
-const etapas = [
-  "O que mais faz falta quando penso em você?",
-  "O que eu mais quero agora?",
-  "O que nunca saiu do meu coração?",
-  "Agora é de coração…"
+/* perguntas e respostas DIFERENTES */
+const quiz = [
+  {
+    q: "O que mais faz falta quando penso em você?",
+    a: ["Seu cheiro", "O silêncio"],
+    c: 0
+  },
+  {
+    q: "O que eu mais quero agora?",
+    a: ["Te ver logo", "Dormir"],
+    c: 0
+  },
+  {
+    q: "O que sempre ficou no meu coração?",
+    a: ["Você", "O tempo"],
+    c: 0
+  }
 ];
 
-function responder() {
-  if (etapa < etapas.length) {
-    document.getElementById("texto").innerText = etapas[etapa];
-    etapa++;
-  } else {
-    document.getElementById("btn1").style.display = "none";
-    document.getElementById("btn2").style.display = "none";
-    document.getElementById("texto").style.display = "none";
+function responder(escolha){
+  if(i < quiz.length){
+    document.getElementById("pergunta").innerText = quiz[i].q;
+    document.getElementById("a").innerText = quiz[i].a[0];
+    document.getElementById("b").innerText = quiz[i].a[1];
+    i++;
+  }else{
+    document.getElementById("a").style.display="none";
+    document.getElementById("b").style.display="none";
+    document.getElementById("pergunta").style.display="none";
     document.getElementById("final").classList.remove("hidden");
   }
 }
 
-function abrirSpotify() {
+/* Spotify – Te Vivo */
+function abrirSpotify(){
   window.open(
-    "https://open.spotify.com/search/Tudo%20Que%20Voc%C3%AA%20Quiser%20Luan%20Santana",
+    "https://open.spotify.com/track/5QJ5mJ8z6QxJ2lQ0bQKJbR",
     "_blank"
   );
 }
 
-/* CORAÇÕES */
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "💙";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 8000);
-}, 450);
+/* corações */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💙";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(4+Math.random()*4)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},450);
 </script>
 
 </body>
