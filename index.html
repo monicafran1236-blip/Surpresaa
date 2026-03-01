@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pra Você 💖</title>
+<title>Pra Você 💙</title>
 
 <style>
 * {
@@ -12,23 +12,24 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(135deg, #dbeafe, #e0f2fe, #f0f9ff);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', Arial, sans-serif;
-  color: #fffff;
+  overflow: hidden;
 }
 
 .card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 24px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 26px;
   padding: 30px;
-  width: 340px;
+  width: 350px;
   text-align: center;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
   animation: surgir 1s ease;
+  z-index: 2;
 }
 
 @keyframes surgir {
@@ -45,12 +46,13 @@ body {
 h1 {
   font-size: 22px;
   margin-bottom: 15px;
-  color: #ffb6c1;
+  color: #2563eb;
 }
 
 p {
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #334155;
 }
 
 button {
@@ -59,7 +61,7 @@ button {
   width: 100%;
   border: none;
   border-radius: 30px;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -68,20 +70,35 @@ button {
 
 button:hover {
   transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(255,75,43,0.4);
+  box-shadow: 0 8px 20px rgba(59,130,246,0.4);
 }
 
 .hidden {
   display: none;
 }
 
-#final {
-  animation: surgir 1.2s ease;
-}
-
 .spotify {
   background: linear-gradient(135deg, #1DB954, #1ed760);
-  margin-top: 20px;
+}
+
+/* 💙 CORAÇÕES CAINDO */
+.heart {
+  position: absolute;
+  top: -20px;
+  color: rgba(59,130,246,0.6);
+  font-size: 20px;
+  animation: cair linear infinite;
+}
+
+@keyframes cair {
+  0% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
 }
 </style>
 </head>
@@ -92,8 +109,8 @@ button:hover {
   <h1 id="titulo">Tenho algo pra você…</h1>
   <p id="texto">Vamos ver se você descobre 💭</p>
 
-  <button onclick="responder(0)">Vamos 💕</button>
-  <button onclick="responder(1)">Quero ver 😌</button>
+  <button onclick="responder()">Vamos 💙</button>
+  <button onclick="responder()">Quero ver 💫</button>
 
   <div id="final" class="hidden">
     <p>
@@ -102,20 +119,19 @@ button:hover {
     </p>
 
     <p>
-      Eu gosto de você de um jeito que não sei explicar direito.<br><br>
-      Sinto muita saudade do seu cheiro,<br>
-      da sua presença,<br>
-      do seu carinho.
+      Eu sinto muita saudade do seu cheiro,<br>
+      do seu carinho,<br>
+      da sua presença comigo.
     </p>
 
     <p>
-      Já conto os dias pra te ver de novo,<br>
-      pra te abraçar,<br>
-      e sentir tudo isso outra vez.
+      Já conto os dias pra te ver,<br>
+      te abraçar,<br>
+      e sentir tudo isso de novo.
     </p>
 
-    <p>
-      Eu te amo ❤️
+    <p style="font-size:18px; color:#1e40af;">
+      Eu te amo 💙
     </p>
 
     <button class="spotify" onclick="abrirSpotify()">
@@ -126,28 +142,18 @@ button:hover {
 
 <script>
 let etapa = 0;
-
-const perguntas = [
+const frases = [
   "O que mais faz falta quando penso em você?",
   "O que eu mais quero agora?",
   "O que nunca saiu do meu coração?"
 ];
 
-const respostas = [
-  ["Seu cheiro", "Dormir"],
-  ["Te ver logo", "Comprar algo"],
-  ["Você", "O tempo"]
-];
-
-function responder(opcao) {
-  if (etapa < perguntas.length) {
-    document.getElementById("texto").innerText = perguntas[etapa];
-    const botoes = document.querySelectorAll("button");
-    botoes[0].innerText = respostas[etapa][0];
-    botoes[1].innerText = respostas[etapa][1];
+function responder() {
+  if (etapa < frases.length) {
+    document.getElementById("texto").innerText = frases[etapa];
     etapa++;
   } else {
-    document.getElementById("titulo").innerText = "Agora é sério…";
+    document.getElementById("titulo").innerText = "Agora é de coração…";
     document.getElementById("texto").style.display = "none";
     document.querySelectorAll("button")[0].style.display = "none";
     document.querySelectorAll("button")[1].style.display = "none";
@@ -161,8 +167,21 @@ function abrirSpotify() {
     "_blank"
   );
 }
+
+/* CRIAR CORAÇÕES */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💙";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
+}, 400);
 </script>
 
 </body>
 </html>
-
